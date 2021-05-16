@@ -1,0 +1,41 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/business/serviceCategory.js"></script>
+<script type="text/javascript" src="${ctx}/plugins/jquery-ext/m.js"></script>
+
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center',split:true,border:false,title:'服务分类'">
+<table id="dg" data-options="toolbar:'#toolbar'">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" data-options="field:'name'" width="10%">分类名称</th>
+			<!--
+			<th align="center" data-options="field:'status'" width="10%">状态</th>
+	        -->
+			
+			
+		</tr>
+	</thead>
+</table>
+</div>
+
+
+
+
+<div id="toolbar" style="padding:5px;height:auto;">
+     <div id="toolbar" style="display:inline;margin-left:5px;">
+     <a class="easyui-linkbutton" id="add" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a>
+	</div>
+</div>
+
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:380px;">
+<#include "add.html"/>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<form id="addForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td>会员名称</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="name" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		
+		<tr>
+			<td>会员手机号码</td>
+			<td>
+			  <input name="cellphone" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td>车牌号</td>
+			<td>
+			  <input name="carnumber" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			<td>
+			 
+			</td>
+		</tr>
+		
+		<tr>
+			<td>会员有效日期</td>
+			<td>
+			  <input name="endTime" type="text" class="easyui-datebox" data-options="width: 150"/> 
+			<td>
+			 
+			</td>
+		
+		</tr>
+		
+		
+		<tr>
+		   <td>二维码</td>
+		   <td>
+		     <input name="code" type="text" class="easyui-textbox" data-options="width: 150"/>
+		   </td>
+		   
+		</tr>
+		
+		<tr>
+		  <td>金钱</td>
+		  <td>
+		    		     <input name="money" type="text" class="easyui-textbox" data-options="width: 150"/> 元
+		    
+		  </td>
+		
+		<tr>
+		
+		
+		
+		<tr>
+		  <td>总点数</td>
+		  <td>
+		    		     <input name="totalcount" type="text" class="easyui-textbox" data-options="width: 150"/>
+		    
+		  </td>
+		
+		<tr>
+			<td>描述</td>
+			<td>
+				<textarea rows="3" cols="41" name="remarker" style="font-size: 12px;font-family: '微软雅黑'"></textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>状态</td>
+			<td>
+				<select class="easyui-combobox" name="status" data-options="width: 150"><option value="1">开启</option><option value="0">关闭</option></select>
+			</td>
+		</tr>
+	</table>
+</form>

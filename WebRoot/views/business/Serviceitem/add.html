@@ -1,0 +1,40 @@
+<form id="addForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td>项目名称：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="name" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		
+		<tr>
+			<td>收费方式</td>
+			<td>
+			   <label><input name="payway" type="checkbox" value="1" />支持点数 </label> 
+               <label><input name="payway" type="checkbox" value="2" />支持次数</label> 
+			</td>
+		</tr>
+		
+		
+			<tr>
+			<td>点数/次</td>
+			<td><input name="singleprice" type="text" class="easyui-textbox" data-options="width: 150"/>点</td>
+			<td>
+			 
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td>所属分类</td>
+						<td><select class="easyui-combotree" style="width:150px;" name="category" id="parent"></select></td>
+		</tr>
+		<tr>
+			<td>状态</td>
+			<td>
+				<select class="easyui-combobox" name="status" data-options="width: 150"><option value="1">开启</option><option value="0">关闭</option></select>
+			</td>
+		</tr>
+	</table>
+</form>
