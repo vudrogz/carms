@@ -48,8 +48,8 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	public void findAllByPage(){
 		Page<M> list=getModel(clazz).paginateMysql(toPageIndex(), toPageSize(),getSql());
-		json.getResData().put("rows",list.getList());
-		json.getResData().put("total", list.getTotalRow());
+		//json.getResData().put("rows",list.getList());
+		//json.getResData().put("total", list.getTotalRow());
 		json.setRows(list.getList());
 		json.setTotal(list.getTotalRow()+0L);
         render(new JsonRender(json).forIE());
@@ -60,8 +60,8 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	public void findAll(){
 		List<M> list=getModel(clazz).find(getSql());
-		json.getResData().put("rows",list);
-		json.getResData().put("total", list.size());
+	//	json.getResData().put("rows",list);
+	//	json.getResData().put("total", list.size());
 		json.setRows(list);
 		json.setTotal(list.size()+0L);
         render(new JsonRender(json).forIE());
@@ -78,8 +78,8 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 		List<M> list=new ArrayList<M>();
 		list.add(record);
 	    json.setRows(list);
-		json.getResData().put("rows",list);
-		json.getResData().put("total", list.size());
+		//json.getResData().put("rows",list);
+		//json.getResData().put("total", list.size());
 		json.setTotal(1L);
 		render(new JsonRender(json).forIE());
 	}

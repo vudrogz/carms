@@ -112,5 +112,13 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 	public java.lang.String getPhone() {
 		return get("phone");
 	}
+	public void setToken(java.lang.String token) {
+		set("token", token);
+	}
+
+	public java.lang.String getToken() {
+		return get("token");
+	}
+	
 
 }

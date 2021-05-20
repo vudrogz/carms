@@ -147,6 +147,7 @@ easyExt.add=function(url,callback){
  */
 easyExt.edit=function(selRows,url,callback){
 	$('#addForm').form('clear');
+	console.log(selRows);
 	if(selRows.length==0){
 		$.messager.alert("提示", "请选择要修改的行！", "info");  
 		return;

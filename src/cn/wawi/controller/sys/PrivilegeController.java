@@ -1,7 +1,6 @@
 package cn.wawi.controller.sys;
 
 import cn.wawi.common.annotation.Permission;
-import cn.wawi.controller.BaseController;
 import cn.wawi.controller.BusinessController;
 import cn.wawi.model.sys.Privilege;
 import cn.wawi.utils.DbUtil;

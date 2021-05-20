@@ -60,7 +60,8 @@
      <div id="toolbar" style="display:inline;margin-left:5px;">
      <a class="easyui-linkbutton" id="add" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
 	 <a class="easyui-linkbutton" id="del" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
-	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a>
+	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="check" plain="true">审核</a>
 	</div>
 </div>
 
@@ -88,6 +89,13 @@
 	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#add3Dialog').dialog('close')">取消</a>
 </div>
 
+<div id="add4Dialog" class="easyui-dialog" buttons="#add4Dialog-buttons" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:380px;">
+<#include "check.html"/>
+</div>
 
+<div id="add4Dialog-buttons">
+	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="checks()">确认</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#add4Dialog').dialog('close')">取消</a>
+</div>
 </body>
 </html>

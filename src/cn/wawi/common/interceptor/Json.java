@@ -19,7 +19,14 @@ public class Json <M>{
 	private String methodDes="";      //接口描述
 	private Map<String,Object> resData=new HashMap<String,Object>();          //数据集合
     private Long total=0L;
-    private List<M> rows=new ArrayList<M>();
+    private List<M> rows  =new ArrayList<M>();
+    private Object row;
+	public Object getRow() {
+		return row;
+	}
+	public void setRow(Object row) {
+		this.row = row;
+	}
 	public Json(){
 	}
 	public Json(Map<String,Object> resData,String method,String methodDes){
@@ -75,4 +82,5 @@ public class Json <M>{
 	public void setRows(List<M> rows) {
 		this.rows = rows;
 	}
+	
 }

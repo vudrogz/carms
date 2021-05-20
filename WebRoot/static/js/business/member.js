@@ -55,6 +55,13 @@ $(function() {
 		});
 	});
 	
+	$("#check").click(function(){
+		var selRows=$('#dg').datagrid('getSelections');
+        $("#mid").val(selRows[0].id);
+		$('#add4Dialog').dialog('open').dialog('setTitle','审核');
+
+	});
+	
 	
 	
 	//添加实现
@@ -90,6 +97,17 @@ $(function() {
 
 var member=member ||{};
 
+
+function checks()
+{
+    var jt=  $("#checkForm").serialize();
+	easyExt.ajax({url:easyExt.url+"/member/validateMember?"+jt,type:'post'},function(data,status, xhr){
+		$('#add4Dialog').dialog('close');
+		$('#dg').datagrid('reload'); 
+
+	});	
+}
+
 //查看服务管理
 function lookP(id){
 	member.id=id;
@@ -100,6 +118,7 @@ function lookP(id){
 		$('#tg').treegrid("unselectAll");
 		for(var i=0;j=data.length,i<j;i++){
 			$('#tg').treegrid("select",data[i].columns.id);
+			
 		}
 	});
 }

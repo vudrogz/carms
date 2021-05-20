@@ -73,4 +73,12 @@ public abstract class BaseMemberservice<M extends BaseMemberservice<M>> extends 
 		return get("payway");
 	}
 
+	public void setTime(java.lang.Integer time) {
+		set("time", time);
+	}
+
+	public java.lang.Integer getTime() {
+		return get("time");
+	}
+
 }

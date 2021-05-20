@@ -1,8 +1,5 @@
 package cn.wawi.controller.sys;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.wawi.common.annotation.Logs;
 import cn.wawi.common.interceptor.GlobalInterceptor;
 import cn.wawi.common.interceptor.LoginInterceptor;
@@ -37,32 +34,20 @@ public class UserController extends BaseController<User>{
 	}
 	
 	
-	public void mobilelogin() {
-		User user=getSessionAttr("loginUser");
-    	Map<String,Object> map = new HashMap<String, Object>();
-		if(user==null){
-        	user=User.dao.login(getPara("username"),MD5Util.MD5(getPara("password")));
-        	if(user==null){
+	public void userlogin() {		
+    	User user=User.dao.login(getPara("username"),MD5Util.MD5(getPara("password")));
+        if(user==null){
         		json.setResMsg("用户名或者密码不对!");
     			json.setResCode(0);
-        	}else{
-        		setSessionAttr("loginUser", user);
-        	//	List<Map<String,Object>> permissions = Privilege.dao.findUserPermission(user.get("id"),"F");
-        	//    map.put("permissions", permissions);
-        		json.setResData(map);
+        }else{
+        		long token = System.currentTimeMillis();
+        		user.setToken(String.valueOf(token));  //  
+		        		user.update();
+        	    json.setRow(user);
         	    json.setResMsg("登录成功!");
     			json.setResCode(1);
-        	}
-    	}else{
-    		//List<Map<String,Object>> permissions = Privilege.dao.findUserPermission(user.get("id"),"F");
-    	    //map.put("permissions", permissions);
-    		//json.setResData(map);
-    		json.setResMsg("登录成功!");
-			json.setResCode(1);
-    	}
-		
+        }
 		render(new JsonRender(json).forIE());
-
 	}
 	
 	

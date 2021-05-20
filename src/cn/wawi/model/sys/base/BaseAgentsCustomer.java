@@ -115,4 +115,12 @@ public abstract class BaseAgentsCustomer<M extends BaseAgentsCustomer<M>> extend
 		return get("deleted");
 	}
 	
+	public void setToken(java.lang.String token) {
+		set("token", token);
+	}
+
+	public java.lang.String getToken() {
+		return get("token");
+	}
+	
 }

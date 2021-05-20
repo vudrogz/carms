@@ -56,14 +56,6 @@ public abstract class BaseMember<M extends BaseMember<M>> extends Model<M> imple
 	public java.util.Date getCreateTime() {
 		return get("createTime");
 	}
-	
-	public void setEndTime(java.util.Date endTime) {
-		set("endTime", endTime);
-	}
-
-	public java.util.Date getEndTime() {
-		return get("endTime");
-	}
 
 	public void setUpdateTime(java.util.Date updateTime) {
 		set("updateTime", updateTime);
@@ -112,13 +104,30 @@ public abstract class BaseMember<M extends BaseMember<M>> extends Model<M> imple
 	public java.lang.Integer getTotalcount() {
 		return get("totalcount");
 	}
-	
-	public void setDeleted(java.lang.Boolean deleted){
-		set("deleted",deleted);
+
+	public void setDeleted(java.lang.Boolean deleted) {
+		set("deleted", deleted);
 	}
-	
-	public java.lang.Boolean getDeleted(){
+
+	public java.lang.Boolean getDeleted() {
 		return get("deleted");
 	}
 
+	public void setEndTime(java.util.Date endTime) {
+		set("endTime", endTime);
+	}
+
+	public java.util.Date getEndTime() {
+		return get("endTime");
+	}
+    
+	
+	public java.lang.Integer getCheckStatus(){
+		return get("checkStatus");
+	}
+	
+	public void setCheckStatus(java.lang.Integer checkStatus){
+		set("checkStatus",checkStatus);
+	}
+	
 }
