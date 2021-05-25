@@ -12,6 +12,7 @@ import cn.wawi.common.interceptor.AgentTokenInterceptor;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.business.AgentsCustomer;
 import cn.wawi.model.sys.Privilege;
+import cn.wawi.utils.DbUtil;
 import cn.wawi.utils.MD5Util;
 
 import com.jfinal.aop.Before;
@@ -19,6 +20,7 @@ import com.jfinal.ext.route.ControllerBind;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfinal.render.JsonRender;
 import com.mchange.v2.lang.StringUtils;
@@ -46,7 +48,6 @@ public class AgentsCustomerController extends BaseController<AgentsCustomer>{
 		}
 		render(new JsonRender(json).forIE());
 	}
-	
 	
 	  /**
      * PC添加子账户
@@ -78,6 +79,16 @@ public class AgentsCustomerController extends BaseController<AgentsCustomer>{
 		}
 		render(new JsonRender(json).forIE());
 	}
+	
+	
+	@Before(AgentTokenInterceptor.class)
+	public void findAgentOpenService(){
+		List<Record> recordsA = Db.find("select * from servicecategory where deleted !=1 ");
+		List<Record> recordsB = Db.find("select A.*,category as parentId from serviceitem A where deleted !=1 ");
+		recordsA.addAll(recordsB);
+		render(new JsonRender(DbUtil.findTree(recordsA)).forIE());
+	}
+	
 	
 	
 	@Before(AgentTokenInterceptor.class)
@@ -123,7 +134,7 @@ public class AgentsCustomerController extends BaseController<AgentsCustomer>{
 	public void deleteSubAgent(){
 		String ids=getPara("ids");
 		String parent_id = getPara("agentId");
-		if(Db.update("update agents_customer  where  parent_id= ? id in ("+ids+")",parent_id)<=0){
+		if(Db.update("update agents_customer set deleted = 1  where  parent_id= ? and id in ("+ids+")",parent_id)<=0){
 			json.setResMsg("批量删除失败!");
 			json.setResCode(0);
 		}
