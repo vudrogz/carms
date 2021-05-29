@@ -40,7 +40,7 @@ $(function() {
 		 }).treegrid('clientPaging');
 	};
 	easyExt.initDataGrid('#dg','/agents_customer/findAllByPage');
-	easyExt.initTreeGrid('#tg','/servicecategory/getServiceCategory'); 
+	easyExt.initTreeGrid('#tg','/servicecategory/getServiceCateegory'); 
 	
 	
 	//easyExt.initTreeGrid('#tg','/serviceitem/findAll'); 

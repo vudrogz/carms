@@ -1,6 +1,7 @@
 package cn.wawi.controller.sys;
 
 import cn.wawi.common.annotation.Permission;
+import cn.wawi.controller.BaseController;
 import cn.wawi.controller.BusinessController;
 import cn.wawi.model.sys.Role;
 
@@ -24,6 +25,7 @@ public class RoleController extends BusinessController<Role>{
 	 */
 	@Before(Tx.class)
 	public void saveRolePrivilege(){
+
 		String roleId=getPara("roleId");
 		Db.update("delete from sys_role_privilege where roleId=?", roleId);
 		String privilegeIds=getPara("privilegeIds");

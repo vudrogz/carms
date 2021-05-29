@@ -53,7 +53,7 @@ public class DbUtil {
 				map.put("text", p.get("name"));
 				map.put("name", p.get("name"));
 				map.put("url", p.get("url"));
-				map.put("checked", false);
+				map.put("checked", true);
 				map.put("iconCls", p.get("iconCls"));
 				if (children != null && children.size() > 0){
 					map.put("children", children);

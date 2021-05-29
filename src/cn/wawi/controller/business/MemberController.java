@@ -3,17 +3,17 @@ package cn.wawi.controller.business;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 
-
 import cn.wawi.common.annotation.Permission;
-import cn.wawi.common.interceptor.AgentTokenInterceptor;
 import cn.wawi.common.interceptor.SellerTokenInterceptor;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.business.ConsumRecord;
 import cn.wawi.model.business.Member;
 import cn.wawi.model.business.Payrecord;
 import cn.wawi.model.sys.User;
+import cn.wawi.utils.MD5Util;
 import cn.wawi.utils.QRCodeUtil;
 
 import com.google.zxing.WriterException;
@@ -25,6 +25,7 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfinal.render.JsonRender;
+import com.mchange.v2.lang.StringUtils;
 
 @ControllerBind(controllerKey="/member")
 public class MemberController extends BaseController<Member>{
@@ -44,57 +45,56 @@ public class MemberController extends BaseController<Member>{
 	
 	//后台子帐号列表
 	
+	
+	
 	//消费
 	
 	//员工token
 	@Before(SellerTokenInterceptor.class)
 	public void addMember(){
 		Model<Member> m=getModel(Member.class);
-		m.set("userid", getPara("managerId"));
+		m.set("userid", getPara("userid"));
 		if(!m.save())
 	    {
 			json.setResMsg("添加失败!");
 			json.setResCode(0);
 		}
-	}	
-	
-	@Before(AgentTokenInterceptor.class)
-	public void getMemberInfoByScan(){
-	   String  code = getRequest().getParameter("code");
-	   Member member =   Member.dao.findFirst("select * from member where code = ? ", code);
-	   json.setRow(member);
-       render(new JsonRender(json).forIE());
-
+		
 	}
+	
 	//更新二维码
 	@Before(SellerTokenInterceptor.class)
 	public void updateMemberQRcode(){
-		int x = Db.update("update member set code=? where userid=? and id =? ", getPara("code"),getPara("managerId"),getPara("id"));
+		int x = Db.update("update member set code=? where userid=? and id =? ", getPara("code"),getPara("userid"),getPara("id"));
 		if(x==0){
 			json.setResMsg("失败!");
 			json.setResCode(0);
 		}
 	}
 	
-	//我的会员
 	@Before(SellerTokenInterceptor.class)
 	public void findMyMember(){
-		Page<Member> list=getModel(Member.class).paginateMysql(toPageIndex(), toPageSize(),"select * from member where id!=1 and userid = ?",getPara("managerId"));
+		Page<Member> list=getModel(Member.class).paginateMysql(toPageIndex(), toPageSize(),"select * from member where id!=1 and userid = ?",getPara("userid"));
 		json.setRows(list.getList());
 		json.setTotal(list.getTotalRow()+0L);
         render(new JsonRender(json).forIE());
+		
 	}
 	
 	
-	//修改会员
+	//修改二维码
 	@Before(SellerTokenInterceptor.class)
 	public void updateMember()
 	{
 		Model<?> m=getModel(Member.class);
-	    m.remove("money");
-	    m.remove("totalcount");
-	    m.remove("status");
-	    m.remove("checkStatus");
+		if(m.dbHasProp("updateTime"))
+		{
+			m.set("updateTime", new Date());
+		}
+		if(m.dbHasProp("password")&&StringUtils.nonEmptyString(m.getStr("password")))
+		{
+			m.set("password", MD5Util.MD5(m.getStr("password")));
+		}
 		if(!m.update()){
 			json.setResMsg("修改失败!");
 			json.setResCode(0);
@@ -124,6 +124,7 @@ public class MemberController extends BaseController<Member>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 
 		Model<Member> m=getModel(Member.class);
 		m.set("code",path );
 		User user=getSessionAttr("loginUser");
@@ -166,23 +167,6 @@ public class MemberController extends BaseController<Member>{
 	}
 	
 	
-	@Before({Tx.class,SellerTokenInterceptor.class})
-	public void addCountToMember(){
-		Model<Payrecord> m=getModel(Payrecord.class);
-        m.set("userid", getPara("managerId"));
-        String memberid = String.valueOf(m.get("memberid"));
-        Record record = Member.dao.getMemberById(memberid); //用户金钱
-        BigDecimal allmoney =  record.get("money");
-        allmoney.add(new BigDecimal((String)m.get("money"))); //金钱
-        Integer totalcount = record.get("totalcount");
-        String count =  m.get("count");
-        m.save();
-        Db.update("update member set totalcount = ? ,money=? where id = ? ",totalcount+count,allmoney,memberid);
-    	json.setResMsg("充值成功!");
-		json.setResCode(1);
-		render(new JsonRender(json).forIE());
-	}
-	
     
 	@Before(Tx.class)
 	public void addMoney(){
@@ -201,12 +185,13 @@ public class MemberController extends BaseController<Member>{
     	json.setResMsg("充值成功!");
 		json.setResCode(0);
 		render(new JsonRender(json).forIE());
+        
 	}
 	
 	
 	
 	
-	@Before({Tx.class, AgentTokenInterceptor.class})
+	@Before(Tx.class)
 	public void cosume(){
 		//会员二位码  - >会员id
 		//商户开通服务   用户拥有这个服务

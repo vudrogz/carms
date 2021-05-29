@@ -16,11 +16,16 @@ public class ServiceCategoryController extends BaseController<Servicecategory>{
 	
 
 	
-	public void getServiceCategory(){
+	public void getServiceCateegory(){
+		//List<Record>  records =   Servicecategory.dao.getCategorys();
+		//Map<String,Object> maps = new HashMap<String, Object>();
+		
 		List<Record> recordsA = Db.find("select * from servicecategory where deleted !=1 ");
 		List<Record> recordsB = Db.find("select A.*,category as parentId from serviceitem A where deleted !=1 ");
 		recordsA.addAll(recordsB);
+		
 		render(new JsonRender(DbUtil.findTree(recordsA)).forIE());
+
 	}
 
 }

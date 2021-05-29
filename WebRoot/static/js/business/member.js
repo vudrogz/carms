@@ -43,7 +43,7 @@ $(function() {
 	};
 	
 	easyExt.initDataGrid('#dg','/member/findAllByPage');
-	easyExt.initTreeGrid('#tg','/servicecategory/getServiceCategory'); 
+	easyExt.initTreeGrid('#tg','/servicecategory/getServiceCateegory'); 
 
 	//easyExt.initDataGrid('#tg','/serviceitem/findAll');
 
