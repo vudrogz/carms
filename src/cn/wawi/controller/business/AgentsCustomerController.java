@@ -200,8 +200,13 @@ public class AgentsCustomerController extends BaseController<AgentsCustomer>{
 	
 	@Before(AgentTokenInterceptor.class)
 	public void findServiceCategoryTree(){
-		  //select A.*,B.serviceid from (select A.*,category as parentId from serviceitem A where deleted !=1)A left join (select * from agentsservice where agentsid = 5 ) B on A.id = B.serviceid
-	}
+        List<Record> recordsA = Db.find("select * from servicecategory where deleted !=1 ");
+    	List<Record> recordsB = Db.find("select A.*,B.serviceid from (select A.*,category as parentId from serviceitem A where deleted !=1)A left join (select * from agentsservice where agentsid = 5 ) B on A.id = B.serviceid");
+		recordsA.addAll(recordsB);	
+		render(new JsonRender(DbUtil.findTree(recordsA)).forIE());
+
+    
+    }
 	
 	
 	public  String getSql(){
